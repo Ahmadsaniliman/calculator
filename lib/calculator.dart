@@ -26,11 +26,7 @@ class _CalculatorAppState extends State<CalculatorApp> {
 
   final List<List<CalculatorButton>> _buttonLayout = [
     [
-      const CalculatorButton(
-        text: "MC",
-        value: "MC",
-        type: ButtonType.memory,
-      ),
+      const CalculatorButton(text: "MC", value: "MC", type: ButtonType.memory),
       const CalculatorButton(text: "MR", value: "MR", type: ButtonType.memory),
       const CalculatorButton(text: "M+", value: "M+", type: ButtonType.memory),
       const CalculatorButton(text: "M-", value: "M-", type: ButtonType.memory),
@@ -41,7 +37,11 @@ class _CalculatorAppState extends State<CalculatorApp> {
           value: "C",
           type: ButtonType.utility,
           color: Colors.red[400]),
-      const CalculatorButton(text: "CE", value: "CE", type: ButtonType.utility),
+      CalculatorButton(
+          text: "CE",
+          value: "CE",
+          type: ButtonType.utility,
+          color: Colors.red[400]),
       const CalculatorButton(text: "√", value: "√", type: ButtonType.function),
       const CalculatorButton(
           text: "÷",
@@ -87,7 +87,7 @@ class _CalculatorAppState extends State<CalculatorApp> {
           text: "=",
           value: "=",
           type: ButtonType.operation,
-          color: Colors.blue),
+          color: Colors.red),
     ],
   ];
 
@@ -97,13 +97,8 @@ class _CalculatorAppState extends State<CalculatorApp> {
       body: SafeArea(
         child: Column(
           children: [
-            // Display area
             _buildDisplay(),
-
-            // History toggle
             _buildHistoryToggle(),
-
-            // Calculator buttons or history
             Expanded(
               child: _showHistory ? _buildHistory() : _buildButtonGrid(),
             ),
@@ -120,7 +115,6 @@ class _CalculatorAppState extends State<CalculatorApp> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          // Main display
           SizedBox(
             width: double.infinity,
             child: Text(
@@ -168,7 +162,7 @@ class _CalculatorAppState extends State<CalculatorApp> {
 
   Widget _buildButtonGrid() {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(10),
       child: Column(
         children: _buttonLayout.map((row) {
           return Expanded(
@@ -191,16 +185,13 @@ class _CalculatorAppState extends State<CalculatorApp> {
     return Container(
       margin: const EdgeInsets.all(4),
       child: Material(
-        color: Colors.transparent,
         child: InkWell(
           onTap: () => _handleButtonPress(button.value),
-          borderRadius: BorderRadius.circular(50),
           child: Container(
             decoration: BoxDecoration(
               color: isPressed
                   ? Colors.white
                   : button.color ?? _getDefaultButtonColor(button.type),
-              borderRadius: BorderRadius.circular(50),
               border:
                   isPressed ? Border.all(color: Colors.orange, width: 2) : null,
             ),
@@ -231,25 +222,11 @@ class _CalculatorAppState extends State<CalculatorApp> {
       case ButtonType.function:
         return Colors.grey[600]!;
       case ButtonType.memory:
-        return Colors.red[700]!;
+        return Colors.grey[600]!;
       case ButtonType.utility:
         return Colors.grey[600]!;
     }
   }
-//   Color _getDefaultButtonColor(ButtonType type) {
-//     switch (type) {
-//       case ButtonType.number:
-//         return Colors.grey[800]!;
-//       case ButtonType.operation:
-//         return Colors.orange;
-//       case ButtonType.function:
-//         return Colors.grey[600]!;
-//       case ButtonType.memory:
-//         return Colors.blue[700]!;
-//       case ButtonType.utility:
-//         return Colors.grey[600]!;
-//     }
-//   }
 
   Color _getDefaultTextColor(ButtonType type) {
     switch (type) {
